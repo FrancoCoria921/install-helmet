@@ -1,11 +1,11 @@
 'use strict';
-// require('dotenv').config();
+require('dotenv').config();
 const express     = require('express');
 const bodyParser  = require('body-parser');
 const fccTesting  = require('./freeCodeCamp/fcctesting.js');
 const app         = express();
 
-// Requerir la librería BCrypt
+// Requerir la librería BCrypt: Esencial para la Prueba 2.
 const bcrypt = require('bcrypt');
 
 fccTesting(app);
@@ -17,7 +17,7 @@ const someOtherPlaintextPassword = 'pass123';
 
 
 //START_ASYNC -do not remove notes, place code between correct pair of notes.
-// Implementación Asíncrona: Hashing y Comparación
+// Implementación Asíncrona: Hashing y Comparación (Método preferido)
 
 bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
     if (err) {
@@ -26,17 +26,17 @@ bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
     }
     
     console.log("-----------------------------------------");
-    console.log("ASYNC: Hash generated:", hash);
+    console.log("ASYNC: Hash generado:", hash);
 
-    // Comparación asíncrona (correcta)
+    // Comparación asíncrona (contraseña correcta)
     bcrypt.compare(myPlaintextPassword, hash, function(err, result) {
-        if (err) return console.error("Async Compare Error (Correct):", err);
-        console.log("ASYNC: Correct comparison result (should be true):", result);
+        if (err) return console.error("Async Compare Error (Correcta):", err);
+        console.log("ASYNC: Comparación correcta (debe ser true):", result);
 
-        // Comparación asíncrona (incorrecta)
+        // Comparación asíncrona (contraseña incorrecta)
         bcrypt.compare(someOtherPlaintextPassword, hash, function(err, result) {
-            if (err) return console.error("Async Compare Error (Incorrect):", err);
-            console.log("ASYNC: Incorrect comparison result (should be false):", result);
+            if (err) return console.error("Async Compare Error (Incorrecta):", err);
+            console.log("ASYNC: Comparación incorrecta (debe ser false):", result);
             console.log("-----------------------------------------");
         });
     });
@@ -44,20 +44,20 @@ bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
 //END_ASYNC
 
 //START_SYNC
-// Implementación Síncrona: Hashing y Comparación
+// Implementación Síncrona: Hashing y Comparación (Bloquea el hilo, usar con precaución)
 
-// 1. Generar Hash Síncronamente
 try {
+    // 1. Generar Hash Síncronamente
     const hashSync = bcrypt.hashSync(myPlaintextPassword, saltRounds);
-    console.log("SYNC: Hash generated:", hashSync);
+    console.log("SYNC: Hash generado:", hashSync);
 
     // 2. Comparar Síncronamente (contraseña correcta)
     const syncMatchCorrect = bcrypt.compareSync(myPlaintextPassword, hashSync);
-    console.log("SYNC: Correct comparison result (should be true):", syncMatchCorrect);
+    console.log("SYNC: Comparación correcta (debe ser true):", syncMatchCorrect);
 
     // 3. Comparar Síncronamente (contraseña incorrecta)
     const syncMatchIncorrect = bcrypt.compareSync(someOtherPlaintextPassword, hashSync);
-    console.log("SYNC: Incorrect comparison result (should be false):", syncMatchIncorrect);
+    console.log("SYNC: Comparación incorrecta (debe ser false):", syncMatchIncorrect);
     console.log("-----------------------------------------");
 } catch (error) {
     console.error("SYNC Error:", error);
