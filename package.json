@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node server.js"
   },
-  "dependencies": {
+    "dependencies": {
     "dotenv": "^16.0.3",
     "bcrypt": "5.0.1",
     "body-parser": "^1.16.0",
@@ -23,4 +23,3 @@
   ],
   "license": "MIT"
 }
-
